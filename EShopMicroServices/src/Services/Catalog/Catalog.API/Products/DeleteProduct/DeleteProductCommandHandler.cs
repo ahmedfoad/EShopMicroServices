@@ -9,9 +9,12 @@ namespace Catalog.API.Products.DeleteProduct
         {
             logger.LogInformation("DeleteProductCommandHandler.Handle called with {@command}", command);
 
-            var product = documentSession.LoadAsync<Product>(command.Id);
-            documentSession.Delete(product);
-            await documentSession.SaveChangesAsync();
+            var product = documentSession.LoadAsync<Product>(command.Id, cancellationToken);
+
+            if(product is null) return new DeleteProductCommandResult(false);
+
+            documentSession.Delete<Product>(command.Id);
+            await documentSession.SaveChangesAsync(cancellationToken);
             return new DeleteProductCommandResult(true);
         }
     }

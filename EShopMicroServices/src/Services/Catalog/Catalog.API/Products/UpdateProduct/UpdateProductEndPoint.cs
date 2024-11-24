@@ -1,7 +1,4 @@
-﻿
-using Catalog.API.Products.CreateProduct;
-
-namespace Catalog.API.Products.UpdateProduct;
+﻿namespace Catalog.API.Products.UpdateProduct;
 
 public record UpdateProductRequest(Guid Id, string Name, ICollection<string> Category, string Description, string ImageFile, decimal Price);
 public record UpdateProductResponse(bool Result);
@@ -18,7 +15,7 @@ public class UpdateProductEndPoint : ICarterModule
             return Results.Ok(result);
         })
         .WithName("UpdateProduct")
-        .Produces<CreateProductResponse>(statusCode: StatusCodes.Status201Created)
+        .Produces<UpdateProductResponse>(statusCode: StatusCodes.Status200OK)
         .ProducesProblem(StatusCodes.Status400BadRequest)
         .ProducesProblem(StatusCodes.Status500InternalServerError)
         .WithSummary("Update product")

@@ -7,9 +7,9 @@ public class GetProductsByIdHandler(IDocumentSession documentSession, ILogger<Ge
     public async Task<GetProductByIdResponse> Handle(GetProductByIdQuery query, CancellationToken cancellationToken)
     {
         logger.LogInformation("GetProductsByIdHandler.Handle called with {@Query}", query);
-        var product = await documentSession.LoadAsync<Product>(query.Id, cancellationToken);
-        if (product is null)
-            throw new ProductNotFoundException(query.Id);
+       
+        var product = await documentSession.LoadAsync<Product>(query.Id, cancellationToken)
+            ?? throw new ProductNotFoundException(query.Id);
 
         return new GetProductByIdResponse(product);
     }

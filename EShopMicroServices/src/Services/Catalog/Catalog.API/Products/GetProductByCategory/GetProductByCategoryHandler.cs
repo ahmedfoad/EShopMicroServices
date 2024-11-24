@@ -11,7 +11,7 @@ public class GetProductByCategoryHandler(IDocumentSession documentSession, ILogg
 
         var products = await documentSession.Query<Product>()
             .Where(p => p.Category.Contains(query.Category))
-            .ToListAsync();
+            .ToListAsync(cancellationToken);
 
         return new GetProductByCategoryResult(products);
     }
